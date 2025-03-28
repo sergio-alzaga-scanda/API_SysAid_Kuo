@@ -11,7 +11,7 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
 # URL base
-BASE_URL = "https://app.kenos-atom.com/api/V1/Ticket/generateTicket"
+BASE_URL = "https://app.kenos-atom/api/V1/Ticket/generateTicket"
 
 # Credenciales de autenticación para la API externa
 API_USER = "scanda_kuo"
@@ -197,15 +197,6 @@ def is_valid_email(email: str) -> bool:
     # Expresión regular para verificar formato de correo
     email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
     return bool(re.match(email_regex, email))
-
-
-
-import re
-import unidecode
-
-import re
-import unidecode
-
 # Función para normalizar el correo electrónico
 def normalize_email(email: str) -> str:
     # Convertir todo a minúsculas
@@ -246,6 +237,44 @@ def normalize_email(email: str) -> str:
     email = email.replace("sanchez", "sanchez").replace("sánchez", "sanchez").replace("sänchez", "sanchez")
     email = email.replace("diaz", "diaz").replace("díaz", "diaz").replace("dias", "diaz").replace("diez", "diaz")
 
+    # Reemplazar dominios comunes con errores de escritura, considerando la variación de "k" y "qu"
+    email = email.replace("keken", "keken").replace("keken", "keken") \
+                 .replace("keken", "keken").replace("kekenm", "keken").replace("keken", "keken") \
+                 .replace("queken", "keken").replace("kekenqu", "keken")
+
+    email = email.replace("desc", "desc").replace("desk", "desc").replace("descom", "desc") \
+                 .replace("descc", "desc").replace("qudesc", "desc")
+
+    email = email.replace("dacomsa", "dacomsa").replace("dacoms", "dacomsa").replace("dacoms", "dacomsa") \
+                 .replace("quacomsa", "dacomsa").replace("dacomqusa", "dacomsa")
+
+    email = email.replace("tremec", "tremec").replace("tremecx", "tremec").replace("trekec", "tremec") \
+                 .replace("tremquec", "tremec")
+
+    email = email.replace("dynasol", "dynasol").replace("dinasol", "dynasol").replace("dynasol", "dynasol") \
+                 .replace("quynasol", "dynasol").replace("dynasquol", "dynasol")
+
+    email = email.replace("dine", "dine").replace("dinecom.mx", "dine").replace("dinecom", "dine") \
+                 .replace("qudine", "dine")
+
+    email = email.replace("puntamita", "puntamita").replace("punta-mita", "puntamita").replace("puntamita", "puntamita") \
+                 .replace("qupuntamita", "puntamita")
+
+    email = email.replace("adrisa", "adrisa").replace("adresa", "adrisa").replace("adrisa", "adrisa") \
+                 .replace("quadrisa", "adrisa")
+
+    email = email.replace("resirene", "resirene").replace("resirene", "resirene").replace("resirenecom", "resirene") \
+                 .replace("quresirene", "resirene")
+
+    email = email.replace("lndsr", "lndsr").replace("lndstr", "lndsr").replace("lndser", "lndsr") \
+                 .replace("qulndsr", "lndsr")
+
+    email = email.replace("igsr", "igsr").replace("igres", "igsr").replace("igsr", "igsr") \
+                 .replace("quigsr", "igsr")
+
+    email = email.replace("repsol", "repsol").replace("repsolx", "repsol").replace("repsoln", "repsol") \
+                 .replace("qurepsol", "repsol")
+
     # Eliminar espacios adicionales
     email = re.sub(r'\s+', '', email)
 
@@ -263,11 +292,6 @@ def normalize_email(email: str) -> str:
         return ""
 
     return email
-
-
-
-
-
 if __name__ == '__main__':
     # Ejecutar el servidor Flask
     app.run(debug=True)
