@@ -1,0 +1,4 @@
+requests
+logging
+unidecode
+re
